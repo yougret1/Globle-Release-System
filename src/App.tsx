@@ -1,7 +1,17 @@
+import { useState } from "react";
+
 function App() {
+	const [count, setCount] = useState(0);
+	function setCountMe() {
+		setCount(count + 1);
+	}
 	return (
 		<div>
-			<p>Click on the Vite and React logos to learn more</p>
+			<p>
+				<button type="button" onClick={setCountMe}>
+					count is:{count}
+				</button>
+			</p>
 		</div>
 	);
 }
