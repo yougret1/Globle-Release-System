@@ -1,0 +1,24 @@
+#theTab {
+	padding: 0 13px;
+	border-top: 1px solid #eeeeee;
+	.ant-tabs-nav {
+		margin: 0;
+	}
+	.ant-tabs-tab-with-remove {
+		height: 41px;
+		margin: 0;
+		background-color: white;
+		border: 0 0 0 0;
+		border-right: 2px solid #eeeeee;
+	}
+	.ant-tabs-tab-active {
+		box-sizing: border-box;
+		color: #1890ff;
+		background-color: #cdedff;
+		border-bottom: 3px solid #1890ff;
+		box-shadow: 5px 5px 15px #ddffff;
+	}
+	.ant-tabs-nav-operations {
+		background-color: white;
+	}
+}

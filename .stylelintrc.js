@@ -22,6 +22,7 @@ module.exports = {
 		"no-empty-source": null, // 禁止空源码
 		"declaration-block-trailing-semicolon": null, // 要求或不允许在声明块中使用尾随分号 string："always(必须始终有一个尾随分号)"|"never(不得有尾随分号)"
 		"selector-class-pattern": null, // 强制选择器类名的格式
+		"selector-id-pattern": null, //设置选择器id的格式
 		"value-no-vendor-prefix": null, // 关闭 vendor-prefix(为了解决多行省略 -webkit-box)
 		"at-rule-no-unknown": null,
 		"selector-pseudo-class-no-unknown": [

@@ -1,0 +1,21 @@
+#theHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	padding-left: 20px;
+	background-color: white;
+	.left {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		width: 200px;
+		overflow: hidden;
+		.collapsed {
+			font-size: 20px;
+		}
+		.ant-breadcrumb {
+			margin-left: 20px;
+		}
+	}
+}
