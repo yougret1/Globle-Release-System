@@ -1,3 +1,4 @@
+$tapHeight: 36px;
 #theTab {
 	padding: 0 13px;
 	border-top: 1px solid #eeeeee;
@@ -5,8 +6,9 @@
 		margin: 0;
 	}
 	.ant-tabs-tab-with-remove {
-		height: 41px;
+		height: $tapHeight;
 		margin: 0;
+		color: #cccccc;
 		background-color: white;
 		border: 0 0 0 0;
 		border-right: 2px solid #eeeeee;
@@ -19,6 +21,7 @@
 		box-shadow: 5px 5px 15px #ddffff;
 	}
 	.ant-tabs-nav-operations {
+		height: $tapHeight;
 		background-color: white;
 	}
 }

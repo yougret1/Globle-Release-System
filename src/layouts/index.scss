@@ -1,16 +1,23 @@
 #theLayOut {
 	height: 100%;
+	.ant-menu {
+		height: calc(100% - 60px);
+		overflow: auto;
+		.ant-menu-sub {
+			overflow-y: hidden;
+		}
+	}
 	.ant-layout {
 		height: 100%;
 	}
 	.ant-layout-sider {
-		flex: 0 0 200px !important;
-		max-width: 200px !important;
+		flex: 0 0 220px !important;
+		max-width: 220px !important;
 	}
 	.ant-layout-content {
 		box-sizing: border-box;
 		padding: 20px;
-		margin: 10px 13px;
+		margin: 5px 13px;
 		overflow: auto;
 		overflow-x: hidden;
 		background-color: #ffffff;
