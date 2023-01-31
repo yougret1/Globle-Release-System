@@ -86,7 +86,8 @@ const TheTabs = () => {
 		const targetIndex = items.findIndex(pane => pane.key === targetKey);
 		const newPanes = items.filter(pane => pane.key !== targetKey);
 		if (newPanes.length && targetKey === activeKey) {
-			const { key } = newPanes[targetIndex === newPanes.length ? targetIndex - 1 : targetIndex];
+			const { key } =
+				newPanes[targetIndex === newPanes.length ? targetIndex - 1 : targetIndex];
 			setActiveKey(key);
 		}
 		setItems(newPanes);
