@@ -1,6 +1,6 @@
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
 	HomeOutlined,
 	TableOutlined,
@@ -11,8 +11,10 @@ import {
 	ShoppingOutlined,
 	AppstoreOutlined
 } from "@ant-design/icons";
+import { MenuInfo } from "rc-menu/lib/interface";
 const theMenu = () => {
 	const { pathname } = useLocation();
+	const navigate = useNavigate();
 	const [menuActive, setMenuActive] = useState(pathname);
 	const menuList = [
 		{
@@ -32,12 +34,12 @@ const theMenu = () => {
 			children: [
 				{
 					label: "使用 Hooks",
-					key: "/table/useHooks",
+					key: "/proTable/useHooks",
 					icon: <AppstoreOutlined />
 				},
 				{
 					label: "使用 Component",
-					key: "/table/useComponent",
+					key: "/proTable/useComponent",
 					icon: <AppstoreOutlined />
 				}
 			]
@@ -136,10 +138,32 @@ const theMenu = () => {
 			]
 		}
 	];
-
+	// 监听当前URL来实现展开menu菜单
+	const getSubMenuActive = () => {
+		menuList.forEach(item => {
+			if (item.children) {
+				item.children.forEach(child => {
+					if (child.key == pathname) {
+						setSubMenuActive(item.key);
+					}
+				});
+			}
+		});
+	};
 	useEffect(() => {
+		getSubMenuActive();
 		setMenuActive(pathname);
 	}, [pathname]);
+
+	const onClick = (event: MenuInfo) => {
+		navigate(event.key);
+	};
+	const [subMenuActive, setSubMenuActive] = useState("");
+	const openSubMenu = (openKeys: any) => {
+		console.log(openKeys);
+		if (openKeys.length == 0) return setSubMenuActive("");
+		setSubMenuActive(openKeys[1]);
+	};
 
 	return (
 		<Menu
@@ -148,6 +172,9 @@ const theMenu = () => {
 			triggerSubMenuAction="click"
 			selectedKeys={[menuActive]}
 			items={menuList}
+			onClick={onClick}
+			openKeys={[subMenuActive]}
+			onOpenChange={openSubMenu}
 		></Menu>
 	);
 };

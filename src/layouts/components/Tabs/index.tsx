@@ -1,17 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Tabs } from "antd";
 import "./index.scss";
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
-type TabPosition = "left" | "right" | "top" | "bottom";
 const defaultPanes = [
 	{
 		label: "首页",
 		key: "/home"
-	},
-	{
-		label: "超级表格",
-		key: "/proTable"
 	},
 	{
 		label: "数据大屏",
@@ -19,67 +15,40 @@ const defaultPanes = [
 	},
 	{
 		label: "使用 Hooks",
-		key: "/useHooks"
+		key: "/proTable/useHooks"
 	},
 	{
 		label: "使用 Component",
-		key: "/useComponent"
+		key: "/proTable/useComponent"
 	},
 	{
 		label: "数据可视化",
-		key: "/dashboard"
-	},
-	{
-		label: "内嵌页面",
-		key: "/embedded"
-	},
-	{
-		label: "基础 Form",
-		key: "/basicForm"
-	},
-	{
-		label: "校验 Form",
-		key: "/validateForm"
-	},
-	{
-		label: "动态 Form",
-		key: "/dynamicForm"
-	},
-	{
-		label: "水型图",
-		key: "/waterChart"
-	},
-	{
-		label: "柱状图",
-		key: "/columnChart"
-	},
-	{
-		label: "折线图",
-		key: "/超级表格"
-	},
-	{
-		label: "雷达图",
-		key: "/radarChart"
-	},
-	{
-		label: "嵌套环形图",
-		key: "/nestedChart"
+		key: "/dashboard/dataVisualize"
 	}
 ];
 
 const TheTabs = () => {
+	const navigate = useNavigate();
 	const [activeKey, setActiveKey] = useState(defaultPanes[0].key);
 	const [items, setItems] = useState(defaultPanes);
+	const { pathname } = useLocation();
 	const newTabIndex = useRef(0);
-	const [mode] = useState<TabPosition>("top");
+	const reflectKey = (path: string) => {
+		setActiveKey(path);
+		navigate(path);
+	};
+
+	useEffect(() => {
+		setActiveKey(pathname);
+	}, [pathname]);
 	const onChange = (key: string) => {
-		setActiveKey(key);
+		reflectKey(key);
 	};
 
 	const add = () => {
 		const newActiveKey = `newTab${newTabIndex.current++}`;
 		setItems([...items, { label: "New Tab", key: newActiveKey }]);
-		setActiveKey(newActiveKey);
+		reflectKey(newActiveKey);
 	};
 
 	const remove = (targetKey: TargetKey) => {
@@ -110,7 +79,6 @@ const TheTabs = () => {
 			type="editable-card"
 			onEdit={onEdit}
 			defaultActiveKey="1"
-			tabPosition={mode}
 			items={items}
 		/>
 	);
