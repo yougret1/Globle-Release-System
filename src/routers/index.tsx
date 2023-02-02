@@ -1,12 +1,16 @@
+import React from "react";
 import { useRoutes, Navigate, RouteObject } from "react-router-dom";
-import Login from "@/views/login/index";
-import LayoutIndex from "@/layouts/index";
-import Home from "@/views/home/index";
-import NotFind404 from "@/components/ErrorMessage/404";
-import DataScreen from "@/views/dataScreen/index";
-import UseHooks from "@/views/proTable/useHooks/index";
-import UseComponent from "@/views/proTable/useComponent/index";
-import DataVisualize from "@/views/dashboard/dataVisualize";
+import lazyLoad from "./lazyLoad";
+
+// import NotFound from "@/components/ErrorMessage/404";
+// import LayoutIndex from "@/layouts/index";
+// import Login from "@/views/login/index";
+// import Home from "@/views/home/index";
+// import DataScreen from "@/views/dataScreen/index";
+// import UseHooks from "@/views/proTable/useHooks/index";
+// import UseComponent from "@/views/proTable/useComponent/index";
+// import DataVisualize from "@/views/dashboard/dataVisualize";
+
 const rootRouter: RouteObject[] = [
 	{
 		path: "/",
@@ -14,45 +18,49 @@ const rootRouter: RouteObject[] = [
 	},
 	{
 		path: "/login",
-		element: <Login />
+		element: lazyLoad(React.lazy(() => import("@/views/login/index")))
 	},
 	{
-		element: <LayoutIndex name="prop参数传递" />,
+		element: lazyLoad(React.lazy(() => import("@/layouts/index"))),
 		children: [
 			{
 				path: "/home",
-				element: <Home />
+				element: lazyLoad(React.lazy(() => import("@/views/home/index")))
 			},
 			{
 				path: "/dataScreen",
-				element: <DataScreen />
+				element: lazyLoad(React.lazy(() => import("@/views/dataScreen/index")))
 			},
+
 			{
 				path: "/proTable/useHooks",
-				element: <UseHooks />
+				element: lazyLoad(React.lazy(() => import("@/views/proTable/useHooks/index")))
 			},
 			{
 				path: "/proTable/useComponent",
-				element: <UseComponent />
+				element: lazyLoad(React.lazy(() => import("@/views/proTable/useComponent/index")))
 			},
 			{
 				path: "/dashboard/dataVisualize",
-				element: <DataVisualize />
+				element: lazyLoad(
+					React.lazy(() => import("@/views/dashboard/dataVisualize/index"))
+				)
 			},
 			{
-				path: "/*",
-				element: <NotFind404 />
+				path: "*",
+				element: lazyLoad(React.lazy(() => import("@/components/ErrorMessage/404")))
 			}
 		]
 	},
 	{
-		path: "/*",
-		element: <NotFind404 />
+		path: "*",
+		element: lazyLoad(React.lazy(() => import("@/components/ErrorMessage/404")))
 	}
 ];
 
-const TheRouter = () => {
+const Router = () => {
 	const routes = useRoutes(rootRouter);
 	return routes;
 };
-export default TheRouter;
+
+export default Router;

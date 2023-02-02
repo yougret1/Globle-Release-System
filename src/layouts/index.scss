@@ -15,6 +15,7 @@
 	}
 	.ant-layout-content {
 		box-sizing: border-box;
+		height: calc(100% - #{129.2px});
 		padding: 20px;
 		margin: 5px 13px;
 		overflow: auto;
