@@ -1,6 +1,8 @@
 import { Menu } from "antd";
 import { useEffect, useState } from "react";
+import { getOpenKeys } from "@/utils/util";
 import { useLocation, useNavigate } from "react-router-dom";
+import { MenuInfo } from "rc-menu/lib/interface";
 import {
 	HomeOutlined,
 	TableOutlined,
@@ -11,11 +13,33 @@ import {
 	ShoppingOutlined,
 	AppstoreOutlined
 } from "@ant-design/icons";
-import { MenuInfo } from "rc-menu/lib/interface";
 const theMenu = () => {
 	const { pathname } = useLocation();
 	const navigate = useNavigate();
-	const [menuActive, setMenuActive] = useState(pathname);
+	const [selectedKeys, setSelectedKeys] = useState<string[]>([pathname]);
+	const [openKeys, setOpenKeys] = useState<string[]>([]);
+	// 监听当前URL来实现展开menu菜单
+	useEffect(() => {
+		// console.log(openKeys);
+		setOpenKeys(getOpenKeys(pathname));
+		setSelectedKeys([pathname]);
+	}, [pathname]);
+
+	const onClick = (event: MenuInfo) => {
+		console.log("onClick event has been trigger");
+		navigate(event.key);
+	};
+
+	/**
+	 * 重新设置当前menu展开的列表
+	 * @param {string[]} openKeys
+	 * @returns
+	 */
+	const onOpenChange = (openKeys: string[]) => {
+		//获取现在触发的事件,然后直接拆包填入
+		if (openKeys.length == 0) return setOpenKeys(openKeys);
+		return setOpenKeys(getOpenKeys(openKeys[openKeys.length - 1]));
+	};
 	const menuList = [
 		{
 			label: "首页",
@@ -138,43 +162,16 @@ const theMenu = () => {
 			]
 		}
 	];
-	// 监听当前URL来实现展开menu菜单
-	const getSubMenuActive = () => {
-		menuList.forEach(item => {
-			if (item.children) {
-				item.children.forEach(child => {
-					if (child.key == pathname) {
-						setSubMenuActive(item.key);
-					}
-				});
-			}
-		});
-	};
-	useEffect(() => {
-		getSubMenuActive();
-		setMenuActive(pathname);
-	}, [pathname]);
-
-	const onClick = (event: MenuInfo) => {
-		navigate(event.key);
-	};
-	const [subMenuActive, setSubMenuActive] = useState("");
-	const openSubMenu = (openKeys: any) => {
-		console.log(openKeys);
-		if (openKeys.length == 0) return setSubMenuActive("");
-		setSubMenuActive(openKeys[1]);
-	};
-
 	return (
 		<Menu
 			theme="dark"
 			mode="inline"
 			triggerSubMenuAction="click"
-			selectedKeys={[menuActive]}
+			selectedKeys={selectedKeys}
 			items={menuList}
 			onClick={onClick}
-			openKeys={[subMenuActive]}
-			onOpenChange={openSubMenu}
+			openKeys={openKeys}
+			onOpenChange={onOpenChange}
 		></Menu>
 	);
 };

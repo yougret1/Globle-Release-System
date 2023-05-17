@@ -9,7 +9,7 @@ TheHeader;
 import "./index.scss";
 const { Content } = Layout;
 const LayoutIndex = (props: { name: string }) => {
-	console.log(props);
+	if (props.name) console.log(props);
 	const { pathname } = useLocation();
 	return (
 		<Layout id="theLayOut">

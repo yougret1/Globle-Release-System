@@ -46,7 +46,10 @@ export function wrapperEnv(envConf: Recordable): ViteEnv {
  * @param match prefix
  * @param confFiles ext
  */
-export function getEnvConfig(match = "VITE_GLOB_", confFiles = [".env", ".env.production"]) {
+export function getEnvConfig(
+	match = "VITE_GLOB_",
+	confFiles = [".env", ".env.production"]
+) {
 	let envConfig = {};
 	confFiles.forEach(item => {
 		try {
